@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Foto</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<script>
+// Tambahkan class 'active' ke menu yang sesuai dengan halaman saat ini
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
+<body>
+    <header>
+        <div class="logo">Mylove</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="musik.html">Musik</a></li>
+                <li><a href="kartu-doa.html">Wishes</a></li>
+                <li><a href="galeri-foto.html">Random PAP</a></li>
+                <li><a href="games.html">Games</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">☰</div>
+    </header>
+
+    <main class="gallery">
+        <div class="wave-bg"></div>
+        <h2 class="typewriter-text" data-text="Random PAP">Random PAP</h2>
+        <div class="photo-grid">
+            <img class="animate-in" src="assets/images/photo1.jpg" alt="Foto 1">
+            <img class="animate-in" src="assets/images/photo2.jpg" alt="Foto 2">
+            <img class="animate-in" src="assets/images/photo3.jpg" alt="Foto 3">
+            <img class="animate-in" src="assets/images/photo4.jpg" alt="Foto 4">
+            <img class="animate-in" src="assets/images/photo5.jpg" alt="Foto 5">
+            <img class="animate-in" src="assets/images/photo6.jpg" alt="Foto 6">
+            <img class="animate-in" src="assets/images/photo7.jpg" alt="Foto 7">
+            <img class="animate-in" src="assets/images/photo8.jpg" alt="Foto 8">
+            <img class="animate-in" src="assets/images/photo9.jpg" alt="Foto 8">
+        </div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+    // Animasi teks per huruf (typewriter effect)
+    function typeText(element, text, index = 0, delay = 50) {
+        if (index < text.length) {
+            // Tambahkan huruf satu per satu
+            element.textContent += text.charAt(index);
+            setTimeout(() => typeText(element, text, index + 1, delay), delay);
+        }
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        // Target semua elemen dengan class .typewriter-text
+        const typewriterElements = document.querySelectorAll('.typewriter-text');
+
+        typewriterElements.forEach((el, i) => {
+            const fullText = el.getAttribute('data-text');
+            el.textContent = ''; // Kosongkan dulu
+            // Tunggu sebentar sebelum mulai (agar tidak terlalu cepat)
+            setTimeout(() => {
+                // Jika ini paragraf, gunakan delay lebih lama
+                const delay = el.tagName === 'P' ? 30 : 80;
+                typeText(el, fullText, 0, delay);
+            }, i * 1000 + 800); // Judul dulu, lalu paragraf
+        });
+
+        // Trigger animasi masuk
+        setTimeout(() => {
+            document.querySelectorAll('.animate-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 100);
+            });
+        }, 500); // Delay awal 0.5s
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiket Dinner - Mylove</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+              background: linear-gradient(135deg, #fff8f9, #b35b8b);
+            font-family: 'Comic Sans MS', 'Marker Felt', 'Brush Script MT', cursive;
+            color: #333;
+            overflow: hidden;
+        }
+
+        /* Pesan manis di atas */
+        .pre-ticket-message {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s ease-out forwards;
+            text-shadow: 0 2px 6px rgba(255, 105, 180, 0.2);
+        }
+
+        /* Tiket (awalnya tersembunyi) */
+        .printable-ticket {
+            background: linear-gradient(135deg, #fff0f9, #f5eeff);
+            border: 3px dashed #ff69b4;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.25);
+            opacity: 0;
+            transform: scale(0.95);
+            animation: popIn 0.8s ease-out 1.3s forwards;
+        }
+
+        .ticket-header span {
+            background: #ff69b4;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: inline-block;
+            text-align: center;
+            text-shadow: #000;
+        }
+
+        .ticket-body h2 {
+            color: #d32f7d;
+            font-size: 1.8rem;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .ticket-body .for,
+        .ticket-body .date,
+        .ticket-body .place {
+            font-size: 1.1rem;
+            margin: 10px 0;
+            color: #5a1846;
+            text-align: center;
+        }
+
+        .ticket-body .decoration {
+            font-size: 24px;
+            margin: 16px 0;
+            color: #ff69b4;
+            text-align: center;
+            letter-spacing: 8px;
+        }
+
+        .ticket-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .ticket-footer .signature {
+            margin-top: 12px;
+            font-weight: bold;
+            color: #d32f7d;
+        }
+
+        .ticket-holes::before,
+        .ticket-holes::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid #ff69b4;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .ticket-holes::before {
+            left: -12px;
+        }
+
+        .ticket-holes::after {
+            right: -12px;
+        }
+
+        /* Animasi */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Mode cetak: sembunyikan pesan & sesuaikan tiket */
+        @media print {
+            .pre-ticket-message {
+                display: none !important;
+            }
+            body {
+                  background: linear-gradient(135deg, #fff8f9, #b35b8b);;
+            }
+            .printable-ticket {
+                box-shadow: none;
+                border: 2px dashed #999;
+                background: white !important;
+                color: #000;
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .ticket-header span {
+                background: #ff9ec1 ;
+                color: #000 ;
+            }
+        }
+    </style>
+</head>
+<body>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+            </ul>
+        </nav>
+    <div class="pre-ticket-message">ini tiket kamuu bb</div>
+
+    <!-- Tiket utama -->
+    <div class="printable-ticket">
+        <div class="ticket-header">
+            <span>🎟️ DINNER VOUCHER 🎟️</span>
+        </div>
+        <div class="ticket-body">
+            <h2>✨ Romantic Dinner ✨</h2>
+            <p class="for">Untuk: <strong>Kamu & Aku</strong></p>
+            <p class="date">📅 Tanggal: <strong id="tanggalDinner">7 Desember 2025</strong></p>
+            <p class="place">📍 Tempat: <strong>Naughty Olive Resto</strong></p>
+            <div class="decoration">💕 🎂 🥂 🌸</div>
+        </div>
+        <div class="ticket-footer">
+            <p>"Karena kamu layak dirayakan setiap hari. I love you!"</p>
+            <div class="signature">Ditandatangani dengan cinta,<br><strong>Hafizh</strong></div>
+        </div>
+        <div class="ticket-holes"></div>
+    </div>
+
+    <script>
+        // Ambil tanggal dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const tanggal = urlParams.get('tanggal');
+
+        if (tanggal) {
+            document.getElementById('tanggalDinner').textContent = 
+                `${tanggal} Desember 2025`;
+        }
+
+        // Otomatis cetak setelah animasi selesai (~2 detik)
+        window.onload = function() {
+            setTimeout(() => {
+                window.print();
+            }, 2200); // 2.2 detik: cukup untuk animasi selesai
+        };
+    </script>
+</body>
+</html>
