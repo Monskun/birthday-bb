@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<script>
+// Tambahkan class 'active' ke menu yang sesuai dengan halaman saat ini
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
+<body>
+    <header>
+        <div class="logo">Mylove</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="musik.html">Musik</a></li>
+                <li><a href="kartu-doa.html">Wishes</a></li>
+                <li><a href="galeri-foto.html">Random PAP</a></li>
+                <li><a href="games.html">Games</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle">☰</div>
+    </header>
+
+    <main class="hero">
+        <div class="wave-bg"></div>
+
+        <!-- Teks Utama -->
+        <div class="content">
+            <h1 class="typewriter-text" data-text="Happy Birthday Sayang"></h1>
+            <p class="typewriter-text" data-text='"Selamat ulang tahun, sayang. Semoga hari ini seindah senyummu dan cintaku selalu jadi hadiah terbaik untukmu. I love you!"'></p>
+        </div>
+
+        <!-- Galeri Foto -->
+        <div class="photo-gallery">
+            <div class="photo-item animate-in" style="animation-delay: 0.3s;">
+                <img src="assets/images/couple1.jpg" alt="Foto 1">
+            </div>
+            <div class="photo-item animate-in" style="animation-delay: 0.6s;">
+                <img src="assets/images/couple2.jpg" alt="Foto 2">
+            </div>
+            <div class="photo-item animate-in" style="animation-delay: 0.9s;">
+                <img src="assets/images/couple3.jpg" alt="Foto 3">
+            </div>
+            <div class="photo-item animate-in" style="animation-delay: 1.0s;">
+                <img src="assets/images/couple4.jpg" alt="Foto 4">
+            </div>
+        </div>
+
+        <!-- Partikel Hati (tetap ada) -->
+        <div class="confetti-container" id="confetti"></div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+
+    <script>
+    // Animasi teks per huruf (typewriter effect)
+    function typeText(element, text, index = 0, delay = 50) {
+        if (index < text.length) {
+            // Tambahkan huruf satu per satu
+            element.textContent += text.charAt(index);
+            setTimeout(() => typeText(element, text, index + 1, delay), delay);
+        }
+    }
+
+    // Jalankan saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+        // Target semua elemen dengan class .typewriter-text
+        const typewriterElements = document.querySelectorAll('.typewriter-text');
+
+        typewriterElements.forEach((el, i) => {
+            const fullText = el.getAttribute('data-text');
+            el.textContent = ''; // Kosongkan dulu
+            // Tunggu sebentar sebelum mulai (agar tidak terlalu cepat)
+            setTimeout(() => {
+                // Jika ini paragraf, gunakan delay lebih lama
+                const delay = el.tagName === 'P' ? 30 : 80;
+                typeText(el, fullText, 0, delay);
+            }, i * 1000 + 800); // Judul dulu, lalu paragraf
+        });
+
+        // Jalankan animasi foto juga (opsional, jika sudah ada)
+        setTimeout(() => {
+            document.querySelectorAll('.photo-item').forEach((item, index) => {
+                setTimeout(() => item.classList.add('visible'), index * 300 + 2000);
+            });
+        }, 0);
+
+        // Trigger animasi masuk
+        setTimeout(() => {
+            document.querySelectorAll('.animate-in').forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('visible');
+                }, index * 100);
+            });
+        }, 500); // Delay awal 0.5s
+    });
+
+    // Buat partikel hati yang terbang pelan
+    function createHearts() {
+        const container = document.querySelector('.hero');
+        for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                heart.style.fontSize = (Math.random() * 16 + 16) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => {
+                    if (heart.parentNode) heart.parentNode.removeChild(heart);
+                }, 18000);
+            }, i * 1200);
+        }
+    }
+    // Jalankan saat halaman dimuat
+    createHearts();
+    // Ulangi setiap 15 detik agar terus ada
+    setInterval(createHearts, 15000);
+    </script>
+</body>
+</html>
